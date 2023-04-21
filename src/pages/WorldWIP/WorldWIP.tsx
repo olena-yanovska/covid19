@@ -8,7 +8,7 @@ export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
 
   const baseUrl = 'https://api.covid19api.com/world';
-  const dateFrom = '2023-01-01';
+  const dateFrom = '2021-01-01';
   const dateTo = '2023-01-06';
   const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
 

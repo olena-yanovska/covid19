@@ -1,11 +1,13 @@
 import {
-  LineChart, 
-  Line, 
-  CartesianGrid, 
-  XAxis, 
-  YAxis, 
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip
 } from 'recharts';
+
 import { WorldWipData } from '../../types/types';
 import './WorldWipList.scss';
 
@@ -15,31 +17,24 @@ interface Props {
 
 export const WorldWipList: React.FC<Props> = ({ worldWipData }) => {
   return (
-    <div className='LiveByCountryList'>
-      <ul>
-        {worldWipData.map((item, index) => (
-          <li key={index}>
-            Date: {String(item.Date).slice(0, 10)} - Confirmed cases: {item.NewConfirmed}
-          </li>
-        ))}
-      </ul>
-
-      <LineChart
-        width={600}
+    <ResponsiveContainer width="100%" height="90%">
+      <BarChart
+        width={500}
         height={300}
         data={worldWipData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
       >
-        <Line 
-          type="monotone"
-          dataKey="NewConfirmed"
-          stroke="#8884d8"
-        />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="Date" />
         <YAxis />
         <Tooltip />
-      </LineChart>
-    </div>
+        <Bar dataKey="NewConfirmed" fill="#8884d8" />
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
