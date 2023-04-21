@@ -1,12 +1,19 @@
-import { Route, Routes } from 'react-router-dom'
-import './App.scss'
-import { Header } from './components/Header/Header'
-import { Sidebar } from './components/Sidebar/Sidebar'
-import { WorldWIP } from './pages/WorldWIP/WorldWIP'
-import { ByCountry } from './pages/ByCountry/ByCountry'
-import { About } from './pages/About/About'
+import { Route, Routes } from 'react-router-dom';
+import './App.scss';
+import { Header } from './components/Header/Header';
+import { Sidebar } from './components/Sidebar/Sidebar';
+import { WorldWIP } from './pages/WorldWIP/WorldWIP';
+import { ByCountry } from './pages/ByCountry/ByCountry';
+import { About } from './pages/About/About';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    return () => {
+      console.log('app unmounted')
+    }
+  }, [])
+
   return (
     <div className="App">
       <Header />
@@ -23,4 +30,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
