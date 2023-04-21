@@ -3,17 +3,10 @@ import './App.scss';
 import { Header } from './components/Header/Header';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { WorldWIP } from './pages/WorldWIP/WorldWIP';
-import { ByCountry } from './pages/ByCountry/ByCountry';
+import { ByCountry } from './pages/LiveByCountry/LiveByCountry';
 import { About } from './pages/About/About';
-import { useEffect } from 'react';
 
 function App() {
-  useEffect(() => {
-    return () => {
-      console.log('app unmounted')
-    }
-  }, [])
-
   return (
     <div className="App">
       <Header />

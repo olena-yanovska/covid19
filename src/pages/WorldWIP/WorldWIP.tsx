@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './WorldWIP.scss';
 import { WorldWipData } from '../../types/types';
 import { getWorldWipData } from '../../api/getData';
+import { WorldWipList } from '../../components/WorldWipList/WorldWipList';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
@@ -14,7 +15,6 @@ export const WorldWIP: React.FC = () => {
   useEffect(() => {
     const getDataWorld = async () => {
       try {
-        console.log('getDataWorld request')
         const res = await getWorldWipData(fullUrl);
 
         if (res) {
@@ -26,11 +26,7 @@ export const WorldWIP: React.FC = () => {
     };
 
     getDataWorld();
-
-    return () => {
-      console.log('WorldWipData unmounted')
-    }
-  }, [worldWipData])
+  }, [])
 
   return (
     <div className='world-wip'>
@@ -40,13 +36,7 @@ export const WorldWIP: React.FC = () => {
       <br />
       <p>Case: Confirmed</p>
 
-      <ul>
-        {worldWipData.map((item, index) => (
-          <li key={index}> 
-            Date: {String(item.Date).slice(0,10)} - Confirmed cases: {item.NewConfirmed}
-          </li>
-        ))}
-      </ul>
+      <WorldWipList worldWipData={worldWipData} />
     </div>
   );
 };

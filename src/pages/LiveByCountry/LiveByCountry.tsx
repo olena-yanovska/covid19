@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import './ByCountry.scss';
+import './LiveByCountry.scss';
 import { LiveByCountryData } from '../../types/types';
 import { getLiveByCountryData } from '../../api/getData';
+import { LiveByCountryList } from '../../components/LiveByCountryList/LiveByCountry';
 
 export const ByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
@@ -25,20 +26,16 @@ export const ByCountry: React.FC = () => {
     };
 
     getDataCountry();
-  }, [liveByCountryData])
+  }, [])
 
   return (
     <div className='by-country'>
-      <h3>By Country Content</h3>
-      <br/>
+      <h3>Live by Country Content</h3>
       <p>{'date from: ' + dateFrom}</p>
       <p>{'country: ' + country}</p>
-      <p></p>
-      <ul>
-        {liveByCountryData.map((item) => (
-          <li>{String(item.Date).slice(0,10) + ' - ' + item.Province + ' - Confirmed cased: ' + item.Confirmed}</li>
-        ))}
-      </ul>
+
+      <LiveByCountryList liveByCountryData={liveByCountryData} />
+
     </div>
   );
 };
