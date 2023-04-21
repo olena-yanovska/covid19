@@ -7,9 +7,9 @@ import { LiveByCountryList } from '../../components/LiveByCountryList/LiveByCoun
 export const ByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
 
-  const url = 'https://api.covid19api.com/live/country/ukraine/status/confirmed/date/2022-09-01T13:13:30Z';
+  const url = 'https://api.covid19api.com/live/country/ukraine/status/confirmed/date/2022-09-09T13:13:30Z';
 
-  const dateFrom = '2022-09-01';
+  const dateFrom = '2022-09-09';
   const country = 'Ukraine';
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export const ByCountry: React.FC = () => {
       <p>{'country: ' + country}</p>
 
       <LiveByCountryList liveByCountryData={liveByCountryData} />
-
     </div>
   );
 };

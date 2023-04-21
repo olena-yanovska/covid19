@@ -18,7 +18,9 @@ export const WorldWIP: React.FC = () => {
         const res = await getWorldWipData(fullUrl);
 
         if (res) {
-          setWorldWipData(res);
+          const sortedRes = res.sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
+          
+          setWorldWipData(sortedRes);
         }
       } catch (error) {
         console.log('error WorldWipData');
