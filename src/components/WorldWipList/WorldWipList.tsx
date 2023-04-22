@@ -8,14 +8,15 @@ import {
   Tooltip
 } from 'recharts';
 
-import { WorldWipData } from '../../types/types';
+import { WorldWipCases, WorldWipData } from '../../types/types';
 import './WorldWipList.scss';
 
 interface Props {
   worldWipData: WorldWipData[],
+  selectedCase: WorldWipCases,
 }
 
-export const WorldWipList: React.FC<Props> = ({ worldWipData }) => {
+export const WorldWipList: React.FC<Props> = ({ worldWipData,selectedCase }) => {
   return (
     <ResponsiveContainer width="100%" height="90%">
       <BarChart
@@ -33,7 +34,7 @@ export const WorldWipList: React.FC<Props> = ({ worldWipData }) => {
         <XAxis dataKey="Date" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="NewConfirmed" fill="#8884d8" />
+        <Bar dataKey={selectedCase} fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );

@@ -22,3 +22,11 @@ export interface LiveByCountryData {
   Date: Date,
   // LocationID: string,
 }
+
+export enum WorldWipCases {
+  NewConfirmed = 'NewConfirmed',
+  NewDeaths = 'NewDeaths',
+  TotalDeaths = 'TotalDeaths',
+  NewRecovered = 'NewRecovered',
+  TotalRecovered = 'TotalRecovered',
+}

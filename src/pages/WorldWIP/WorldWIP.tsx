@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import './WorldWIP.scss';
-import { WorldWipData } from '../../types/types';
+import { WorldWipCases, WorldWipData } from '../../types/types';
 import { getWorldWipData } from '../../api/getData';
 import { WorldWipList } from '../../components/WorldWipList/WorldWipList';
+import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
+  const [selectedCase, setSelectedCase] = useState<WorldWipCases>(WorldWipCases.NewConfirmed);
 
   const baseUrl = 'https://api.covid19api.com/world';
   const dateFrom = '2021-01-01';
@@ -18,7 +20,8 @@ export const WorldWIP: React.FC = () => {
         const res = await getWorldWipData(fullUrl);
 
         if (res) {
-          const sortedRes = res.sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
+          const sortedRes = res
+            .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
           
           setWorldWipData(sortedRes);
         }
@@ -28,17 +31,25 @@ export const WorldWIP: React.FC = () => {
     };
 
     getDataWorld();
-  }, [])
+  }, []);
+
+  const handleSubmit = (selectedCase: WorldWipCases) => {
+    console.log(`Selected case: ${selectedCase}`);
+    setSelectedCase(selectedCase);
+  };
 
   return (
     <div className='world-wip'>
-      <h3>WorldWIP Content</h3>
-      <p>Date from: {dateFrom}</p>
-      <p>Date to: {dateTo}</p>
-      <br />
-      <p>Case: Confirmed</p>
-
-      <WorldWipList worldWipData={worldWipData} />
+      <WorldWipForm 
+        onSubmit={handleSubmit} 
+        selectedCase={selectedCase} 
+        setSelectedCase={setSelectedCase} 
+      />
+      <br/>
+      <WorldWipList 
+        worldWipData={worldWipData} 
+        selectedCase={selectedCase} 
+      />
     </div>
   );
 };
