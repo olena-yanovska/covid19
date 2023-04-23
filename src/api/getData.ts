@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LiveByCountryData, WorldWipData } from '../types/types';
+import { Country, LiveByCountryData, WorldWipData } from '../types/types';
 
 export const getWorldWipData = async (url: string): Promise<WorldWipData[] | undefined> => {
   try {
@@ -20,3 +20,13 @@ export const getLiveByCountryData = async (url: string): Promise<LiveByCountryDa
     console.log('Error with loadind Live by country data');
   }
 }
+
+// export const getCountries = async (): Promise<Country[] | undefined> => {
+//   try {
+//     const response = await axios.get('https://api.covid19api.com/countries');
+
+//     return response.data;
+//   } catch {
+//     console.log('Error with loadind Countries');
+//   }
+// }

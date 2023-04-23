@@ -27,7 +27,7 @@ export const WorldWipForm: React.FC<Props> = ({
   };
 
   return (
-    <div>
+    <div className='worldWipForm'>
       <h3>WorldWIP Content</h3>
       <p>Date from: {dateFrom}</p>
       <p>Date to: {dateTo}</p>
@@ -44,7 +44,6 @@ export const WorldWipForm: React.FC<Props> = ({
             <option value={WorldWipCases.TotalRecovered}>Total Recovered</option>
           </select>
         </label>
-        {/* <button type="submit">Submit</button> */}
       </form>
     </div>
   );

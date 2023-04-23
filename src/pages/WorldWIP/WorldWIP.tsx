@@ -34,7 +34,6 @@ export const WorldWIP: React.FC = () => {
   }, []);
 
   const handleSubmit = (selectedCase: WorldWipCases) => {
-    console.log(`Selected WorldWip case: ${selectedCase}`);
     setSelectedCase(selectedCase);
   };
 
@@ -45,7 +44,6 @@ export const WorldWIP: React.FC = () => {
         selectedCase={selectedCase} 
         setSelectedCase={setSelectedCase} 
       />
-      <br/>
       <WorldWipChart 
         worldWipData={worldWipData} 
         selectedCase={selectedCase} 
