@@ -9,14 +9,14 @@ import {
 } from 'recharts';
 
 import { WorldWipCases, WorldWipData } from '../../types/types';
-import './WorldWipList.scss';
+import './WorldWipChart.scss';
 
 interface Props {
   worldWipData: WorldWipData[],
   selectedCase: WorldWipCases,
 }
 
-export const WorldWipList: React.FC<Props> = ({ worldWipData,selectedCase }) => {
+export const WorldWipChart: React.FC<Props> = ({ worldWipData,selectedCase }) => {
   return (
     <ResponsiveContainer width="100%" height="90%">
       <BarChart

@@ -3,7 +3,7 @@ import './App.scss';
 import { Header } from './components/Header/Header';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { WorldWIP } from './pages/WorldWIP/WorldWIP';
-import { ByCountry } from './pages/LiveByCountry/LiveByCountry';
+import { LiveByCountry } from './pages/LiveByCountry/LiveByCountry';
 import { About } from './pages/About/About';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<About />} />
           <Route path="/about" element={<About />} />
           <Route path="/world-wip" element={<WorldWIP />} />
-          <Route path="/live-by-country" element={<ByCountry />} />
+          <Route path="/live-by-country" element={<LiveByCountry />} />
         </Routes>
       </div>
     </div>

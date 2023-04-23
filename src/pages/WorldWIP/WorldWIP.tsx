@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './WorldWIP.scss';
 import { WorldWipCases, WorldWipData } from '../../types/types';
 import { getWorldWipData } from '../../api/getData';
-import { WorldWipList } from '../../components/WorldWipList/WorldWipList';
+import { WorldWipChart } from '../../components/WorldWipChart/WorldWipChart';
 import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 
 export const WorldWIP: React.FC = () => {
@@ -34,7 +34,7 @@ export const WorldWIP: React.FC = () => {
   }, []);
 
   const handleSubmit = (selectedCase: WorldWipCases) => {
-    console.log(`Selected case: ${selectedCase}`);
+    console.log(`Selected WorldWip case: ${selectedCase}`);
     setSelectedCase(selectedCase);
   };
 
@@ -46,7 +46,7 @@ export const WorldWIP: React.FC = () => {
         setSelectedCase={setSelectedCase} 
       />
       <br/>
-      <WorldWipList 
+      <WorldWipChart 
         worldWipData={worldWipData} 
         selectedCase={selectedCase} 
       />

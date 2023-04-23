@@ -44,7 +44,7 @@ export const WorldWipForm: React.FC<Props> = ({
             <option value={WorldWipCases.TotalRecovered}>Total Recovered</option>
           </select>
         </label>
-        <button type="submit">Submit</button>
+        {/* <button type="submit">Submit</button> */}
       </form>
     </div>
   );

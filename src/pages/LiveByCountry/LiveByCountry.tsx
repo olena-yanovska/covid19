@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import './LiveByCountry.scss';
-import { LiveByCountryData } from '../../types/types';
+import { LiveByCountryCases, LiveByCountryData } from '../../types/types';
 import { getLiveByCountryData } from '../../api/getData';
-import { LiveByCountryList } from '../../components/LiveByCountryList/LiveByCountry';
+import { LiveByCountryChart } from '../../components/LiveByCountryChart/LiveByCountryChart';
+import { LiveByCountryForm } from '../../components/LiveByCountryForm/LiveByCountryForm';
 
-export const ByCountry: React.FC = () => {
+export const LiveByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
+  const [selectedCase, setSelectedCase] = useState<LiveByCountryCases>(LiveByCountryCases.Confirmed);
 
   const url = 'https://api.covid19api.com/live/country/ukraine/status/confirmed/date/2021-09-01T13:13:30Z';
 
-  const dateFrom = '2022-09-09';
-  const country = 'Ukraine';
 
   useEffect(() => {
     const getDataCountry = async () => {
@@ -26,15 +26,25 @@ export const ByCountry: React.FC = () => {
     };
 
     getDataCountry();
-  }, [])
+  }, []);
+
+  const handleSubmit = (selectedCase: LiveByCountryCases) => {
+    console.log(`Selected LiveByCountry case: ${selectedCase}`);
+    setSelectedCase(selectedCase);
+  }
 
   return (
     <div className='by-country'>
-      <h3>Live by Country Content</h3>
-      <p>{'date from: ' + dateFrom}</p>
-      <p>{'country: ' + country}</p>
+      <LiveByCountryForm 
+        onSubmit={handleSubmit} 
+        selectedCase={selectedCase} 
+        setSelectedCase={setSelectedCase} 
+      />
 
-      <LiveByCountryList liveByCountryData={liveByCountryData} />
+      <LiveByCountryChart 
+        liveByCountryData={liveByCountryData} 
+        selectedCase={selectedCase}
+      />
     </div>
   );
 };

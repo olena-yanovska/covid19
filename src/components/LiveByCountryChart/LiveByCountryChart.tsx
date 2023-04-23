@@ -7,14 +7,15 @@ import {
   CartesianGrid,
   Tooltip
 } from 'recharts';
-import { LiveByCountryData } from '../../types/types';
-import './LiveByCountryList.scss';
+import { LiveByCountryCases, LiveByCountryData } from '../../types/types';
+import './LiveByCountryChart.scss';
 
 interface Props {
   liveByCountryData: LiveByCountryData[],
+  selectedCase: LiveByCountryCases;
 }
 
-export const LiveByCountryList: React.FC<Props> = ({ liveByCountryData }) => {
+export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase }) => {
   interface LiveByCountryData {
     [key: string]: any;
   }
@@ -29,16 +30,16 @@ export const LiveByCountryList: React.FC<Props> = ({ liveByCountryData }) => {
 
     for (const obj of liveByCountryData) {
       if (buffer[obj.Date]) {
-        buffer[obj.Date] += obj.Confirmed;
+        buffer[obj.Date] += obj[selectedCase];
       } else {
-        buffer[obj.Date] = obj.Confirmed;
+        buffer[obj.Date] = obj[selectedCase];
       }
     }
 
     for (const key in buffer) {
       const obj = {
         Date: key,
-        Confirmed: buffer[key]
+        [selectedCase]: buffer[key]
       }
       prepared.push(obj);
     }
@@ -66,7 +67,7 @@ export const LiveByCountryList: React.FC<Props> = ({ liveByCountryData }) => {
         <XAxis dataKey="Date" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="Confirmed" fill="#8884d8" />
+        <Bar dataKey={selectedCase} fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );

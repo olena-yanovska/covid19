@@ -30,3 +30,9 @@ export enum WorldWipCases {
   NewRecovered = 'NewRecovered',
   TotalRecovered = 'TotalRecovered',
 }
+
+export enum LiveByCountryCases {
+  Confirmed = 'Confirmed',
+  Deaths = 'Deaths',
+  Recovered = 'Recovered',
+}
