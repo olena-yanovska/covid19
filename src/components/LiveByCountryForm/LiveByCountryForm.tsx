@@ -1,16 +1,22 @@
 import { countries } from '../../api/countries';
-import { LiveByCountryCases } from '../../types/types';
 
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+
 interface Props {
   selectedCase: string,
   setSelectedCase: any,
   selectedCountry: string,
   setSelectedCountry: React.Dispatch<React.SetStateAction<string>>,
+  dateFrom: Dayjs,
+  setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
 }
 
 export const LiveByCountryForm: React.FC<Props> = ({
@@ -18,9 +24,9 @@ export const LiveByCountryForm: React.FC<Props> = ({
   setSelectedCase,
   selectedCountry,
   setSelectedCountry,
+  dateFrom,
+  setDateFrom,
 }) => {
-
-  const dateFrom = '2022-09-09';
   const sortedCountries = countries
     .sort((a, b) => a.Slug.localeCompare(b.Country));
 
@@ -35,7 +41,20 @@ export const LiveByCountryForm: React.FC<Props> = ({
 
   return (
     <Box sx={{ display: 'flex', gap: 3 }}>
-      <p>{'date from: ' + dateFrom}</p>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Date from"
+          defaultValue={dayjs(dateFrom)}
+          value={dateFrom}
+          onChange={(newValue) => {
+            if (newValue) {
+              setDateFrom(newValue);
+            } else {
+              setDateFrom(dateFrom);
+            }
+          }}
+        />
+      </LocalizationProvider>
 
       <FormControl>
         <Select

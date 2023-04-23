@@ -6,14 +6,19 @@ import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
   const [selectedCase, setSelectedCase] = useState<string>(WorldWipCases.NewConfirmed);
 
+  const defaultDateFrom: Dayjs = dayjs('2022-01-01');
+  const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
+
+  const defaultDateTo: Dayjs = dayjs('2023-01-06');
+  const [dateTo, setDateTo] = useState<Dayjs>(defaultDateTo);
+
   const baseUrl = 'https://api.covid19api.com/world';
-  const dateFrom = '2021-01-01';
-  const dateTo = '2023-01-06';
   const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
 
   useEffect(() => {
@@ -33,7 +38,7 @@ export const WorldWIP: React.FC = () => {
     };
 
     getDataWorld();
-  }, []);
+  }, [fullUrl]);
 
   const handleSubmit = (selectedCase: WorldWipCases) => {
     setSelectedCase(selectedCase);
@@ -44,6 +49,10 @@ export const WorldWIP: React.FC = () => {
       <WorldWipForm
         selectedCase={selectedCase}
         setSelectedCase={setSelectedCase}
+        dateFrom={dateFrom}
+        setDateFrom={setDateFrom}
+        dateTo={dateTo}
+        setDateTo={setDateTo}
       />
       {worldWipData.length === 0 ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>

@@ -7,18 +7,21 @@ import { countries } from '../../api/countries';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const LiveByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
   const [selectedCase, setSelectedCase] = useState<string>('Confirmed');
   const [selectedCountry, setSelectedCountry] = useState<string>(countries.find(c => c.Country === 'Ukraine')!.Slug);
 
+  const defaultDateFrom: Dayjs = dayjs('2022-01-01');
+  const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
+
   useEffect(() => {
     function getFullUrl() {
       const baseUrl = 'https://api.covid19api.com/live/country/';
-      const date = '2021-09-01';
       const fullUrl = `${baseUrl}${selectedCountry}` +
-        `/status/${selectedCase.toLocaleLowerCase()}/date/${date}`;
+        `/status/${selectedCase.toLocaleLowerCase()}/date/${dateFrom}`;
 
       return fullUrl;
     };
@@ -38,7 +41,7 @@ export const LiveByCountry: React.FC = () => {
     };
 
     getDataCountry();
-  }, [selectedCase, selectedCountry]);
+  }, [selectedCase, selectedCountry, dateFrom]);
 
   return (
     <Box sx={{ width: '70%', padding: '30px' }}>
@@ -47,6 +50,8 @@ export const LiveByCountry: React.FC = () => {
         setSelectedCase={setSelectedCase}
         selectedCountry={selectedCountry}
         setSelectedCountry={setSelectedCountry}
+        dateFrom={dateFrom}
+        setDateFrom={setDateFrom}
       />
 
       {liveByCountryData.length === 0 ? (

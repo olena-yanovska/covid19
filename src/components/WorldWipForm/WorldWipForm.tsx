@@ -5,27 +5,61 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+
 interface Props {
   selectedCase: string,
   setSelectedCase: React.Dispatch<React.SetStateAction<string>>,
+  dateFrom: Dayjs,
+  setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
+  dateTo: Dayjs,
+  setDateTo: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
 }
 
 export const WorldWipForm: React.FC<Props> = ({
   selectedCase,
-  setSelectedCase
+  setSelectedCase,
+  dateFrom,
+  setDateFrom,
+  dateTo,
+  setDateTo,
 }) => {
-
-  const dateFrom = '2021-01-01';
-  const dateTo = '2023-01-06';
-
   const handleSelectChange = (value: string) => {
     setSelectedCase(value);
   };
 
   return (
     <Box sx={{ display: 'flex', gap: 3 }}>
-       <p>Date from: {dateFrom}</p>
-       <p>Date to: {dateTo}</p>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Date from"
+          defaultValue={dayjs(dateFrom)}
+          value={dateFrom}
+          onChange={(newValue) => {
+            if (newValue) {
+              setDateFrom(newValue);
+            } else {
+              setDateFrom(dateFrom);
+            }
+          }}
+        />
+
+        <DatePicker
+          label="Date to"
+          defaultValue={dayjs(dateTo)}
+          value={dateTo}
+          onChange={(newValue) => {
+            if (newValue) {
+              setDateTo(newValue);
+            } else {
+              setDateTo(dateFrom);
+            }
+          }}
+        />
+      </LocalizationProvider>
 
       <FormControl>
         <Select
