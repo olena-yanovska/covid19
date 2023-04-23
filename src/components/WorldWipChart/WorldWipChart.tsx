@@ -17,6 +17,19 @@ interface Props {
 }
 
 export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) => {
+  const getPreparedData = (worldWipData: WorldWipData[]) => {
+    const clearedDate = worldWipData.map((obj) => {
+      return {
+        ...obj,
+        "Date": String(obj.Date).slice(0, 10) 
+      }
+    })
+
+    return clearedDate;
+  };
+
+  const preparedData = getPreparedData(worldWipData);
+
   return (
     <Box sx={{
       width: '100%',
@@ -24,10 +37,11 @@ export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) =
     }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={worldWipData}
+          data={preparedData}
           margin={{
             top: 40,
             left: 20,
+            bottom: 50,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />

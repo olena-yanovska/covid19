@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Box sx={{ maxWidth: '1280px', display: 'flex', flexDirection: 'row', margin: 'auto' }}>
+      <Box sx={{ maxWidth: '1280px', display: 'flex', flexDirection: 'row', margin: '0 auto' }}>
         <Sidebar />
         <Routes>
           <Route path="/" element={<About />} />

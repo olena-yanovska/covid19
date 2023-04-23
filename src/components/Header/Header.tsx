@@ -7,11 +7,11 @@ export const Header: React.FC = () => {
       width: '100%', 
       display: 'flex', 
       justifyContent: 'center', 
-      paddingTop: '50px', 
+      paddingTop: '30px', 
       paddingBottom: '30px', 
       backgroundColor: '#A4F4F9',
     }}>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Covid-19 Statistics
       </Typography>
     </Box>

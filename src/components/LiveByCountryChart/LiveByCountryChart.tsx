@@ -46,7 +46,14 @@ export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selecte
       prepared.push(obj);
     }
 
-    return prepared;
+    const clearedDate = prepared.map((obj) => {
+      return {
+        ...obj,
+        "Date": String(obj.Date).slice(0, 10) 
+      }
+    })
+
+    return clearedDate;
   };
 
   const preparedData = getPreparedData(liveByCountryData);

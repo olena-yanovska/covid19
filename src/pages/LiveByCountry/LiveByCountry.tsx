@@ -44,7 +44,7 @@ export const LiveByCountry: React.FC = () => {
   }, [selectedCase, selectedCountry, dateFrom]);
 
   return (
-    <Box sx={{ width: '70%', padding: '30px' }}>
+    <Box sx={{ width: '70%', padding: '50px' }}>
       <LiveByCountryForm
         selectedCase={selectedCase}
         setSelectedCase={setSelectedCase}
