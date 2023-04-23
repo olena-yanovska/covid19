@@ -1,9 +1,9 @@
-import './About.scss';
+import { Box } from '@mui/material';
 
 export const About: React.FC = () => {
   return (
-    <div className='about'>
+    <Box sx={{}}>
       About Content
-    </div>
+    </Box>
   );
 };

@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import './LiveByCountry.scss';
 import { LiveByCountryCases, LiveByCountryData } from '../../types/types';
 import { getLiveByCountryData } from '../../api/getData';
 import { LiveByCountryChart } from '../../components/LiveByCountryChart/LiveByCountryChart';
 import { LiveByCountryForm } from '../../components/LiveByCountryForm/LiveByCountryForm';
 import { countries } from '../../api/countries';
 
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+
 export const LiveByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
-  const [selectedCase, setSelectedCase] = useState<LiveByCountryCases>(LiveByCountryCases.Confirmed);
+  const [selectedCase, setSelectedCase] = useState<string>('Confirmed');
   const [selectedCountry, setSelectedCountry] = useState<string>(countries.find(c => c.Country === 'Ukraine')!.Slug);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export const LiveByCountry: React.FC = () => {
   }, [selectedCase, selectedCountry]);
 
   return (
-    <div className='liveByCountry'>
+    <Box sx={{ width: '70%', padding: '30px' }}>
       <LiveByCountryForm
         selectedCase={selectedCase}
         setSelectedCase={setSelectedCase}
@@ -48,13 +50,15 @@ export const LiveByCountry: React.FC = () => {
       />
 
       {liveByCountryData.length === 0 ? (
-        <h4>There is no data for selected country</h4>
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+        <CircularProgress />
+      </Box>
       ) : (
         <LiveByCountryChart
           liveByCountryData={liveByCountryData}
           selectedCase={selectedCase}
         />
       )}
-    </div>
+    </Box>
   );
 };

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import './WorldWIP.scss';
 import { WorldWipCases, WorldWipData } from '../../types/types';
 import { getWorldWipData } from '../../api/getData';
 import { WorldWipChart } from '../../components/WorldWipChart/WorldWipChart';
 import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
-  const [selectedCase, setSelectedCase] = useState<WorldWipCases>(WorldWipCases.NewConfirmed);
+  const [selectedCase, setSelectedCase] = useState<string>(WorldWipCases.NewConfirmed);
 
   const baseUrl = 'https://api.covid19api.com/world';
   const dateFrom = '2021-01-01';
@@ -22,7 +24,7 @@ export const WorldWIP: React.FC = () => {
         if (res) {
           const sortedRes = res
             .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
-          
+
           setWorldWipData(sortedRes);
         }
       } catch (error) {
@@ -38,16 +40,21 @@ export const WorldWIP: React.FC = () => {
   };
 
   return (
-    <div className='world-wip'>
-      <WorldWipForm 
-        onSubmit={handleSubmit} 
-        selectedCase={selectedCase} 
-        setSelectedCase={setSelectedCase} 
+    <Box sx={{ width: '70%', padding: '30px' }}>
+      <WorldWipForm
+        selectedCase={selectedCase}
+        setSelectedCase={setSelectedCase}
       />
-      <WorldWipChart 
-        worldWipData={worldWipData} 
-        selectedCase={selectedCase} 
-      />
-    </div>
+      {worldWipData.length === 0 ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <WorldWipChart
+          worldWipData={worldWipData}
+          selectedCase={selectedCase}
+        />
+      )}
+    </Box>
   );
 };

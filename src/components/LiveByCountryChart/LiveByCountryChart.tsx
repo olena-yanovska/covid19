@@ -7,12 +7,14 @@ import {
   CartesianGrid,
   Tooltip
 } from 'recharts';
-import { LiveByCountryCases, LiveByCountryData } from '../../types/types';
-import './LiveByCountryChart.scss';
+import { LiveByCountryData } from '../../types/types';
+
+import { Box } from '@mui/material';
+
 
 interface Props {
   liveByCountryData: LiveByCountryData[],
-  selectedCase: LiveByCountryCases;
+  selectedCase: string;
 }
 
 export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase }) => {
@@ -48,27 +50,27 @@ export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selecte
   };
 
   const preparedData = getPreparedData(liveByCountryData);
-  // console.log(preparedData)
 
   return (
-    <ResponsiveContainer width="100%" height="90%">
-      <BarChart
-        width={500}
-        height={300}
-        data={preparedData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey={selectedCase} fill="#8884d8" />
-      </BarChart>
-    </ResponsiveContainer>
+    <Box sx={{
+      width: '100%',
+      height: '350px',
+    }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={preparedData}
+          margin={{
+            top: 40,
+            left: 20,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="Date" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey={selectedCase} fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+    </Box>
   );
 };

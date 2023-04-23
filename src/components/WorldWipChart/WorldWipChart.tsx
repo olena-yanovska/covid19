@@ -8,34 +8,35 @@ import {
   Tooltip
 } from 'recharts';
 
-import { WorldWipCases, WorldWipData } from '../../types/types';
-import './WorldWipChart.scss';
+import { WorldWipData } from '../../types/types';
+import { Box } from '@mui/material';
 
 interface Props {
   worldWipData: WorldWipData[],
-  selectedCase: WorldWipCases,
+  selectedCase: string,
 }
 
-export const WorldWipChart: React.FC<Props> = ({ worldWipData,selectedCase }) => {
+export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) => {
   return (
-    <ResponsiveContainer width="100%" height="90%">
-      <BarChart
-        width={500}
-        height={300}
-        data={worldWipData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey={selectedCase} fill="#8884d8" />
-      </BarChart>
-    </ResponsiveContainer>
+    <Box sx={{
+      width: '100%',
+      height: '350px',
+    }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={worldWipData}
+          margin={{
+            top: 40,
+            left: 20,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="Date" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey={selectedCase} fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+    </Box>
   );
 };

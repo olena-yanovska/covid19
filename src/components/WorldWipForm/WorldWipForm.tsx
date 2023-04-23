@@ -1,50 +1,46 @@
 import { WorldWipCases } from '../../types/types';
-import './WorldWipForm.scss';
+
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface Props {
-  onSubmit: (selectedCase: WorldWipCases) => void,
-  selectedCase: WorldWipCases,
-  setSelectedCase: React.Dispatch<React.SetStateAction<WorldWipCases>>,
+  selectedCase: string,
+  setSelectedCase: React.Dispatch<React.SetStateAction<string>>,
 }
 
-export const WorldWipForm: React.FC<Props> = ({ 
-  onSubmit, 
-  selectedCase, 
-  setSelectedCase 
+export const WorldWipForm: React.FC<Props> = ({
+  selectedCase,
+  setSelectedCase
 }) => {
 
   const dateFrom = '2021-01-01';
   const dateTo = '2023-01-06';
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value as WorldWipCases;
-    setSelectedCase(selectedValue);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(selectedCase);
+  const handleSelectChange = (value: string) => {
+    setSelectedCase(value);
   };
 
   return (
-    <div className='worldWipForm'>
-      <h3>WorldWIP Content</h3>
-      <p>Date from: {dateFrom}</p>
-      <p>Date to: {dateTo}</p>
-      <br />
+    <Box sx={{ display: 'flex', gap: 3 }}>
+       <p>Date from: {dateFrom}</p>
+       <p>Date to: {dateTo}</p>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Select a case:
-          <select value={selectedCase} onChange={handleSelectChange}>
-            <option value={WorldWipCases.NewConfirmed}>New Confirmed</option>
-            <option value={WorldWipCases.NewDeaths}>New Deaths</option>
-            <option value={WorldWipCases.TotalDeaths}>Total Deaths</option>
-            <option value={WorldWipCases.NewRecovered}>New Recovered</option>
-            <option value={WorldWipCases.TotalRecovered}>Total Recovered</option>
-          </select>
-        </label>
-      </form>
-    </div>
+      <FormControl>
+        <Select
+          labelId="country-select-label"
+          id="country-select"
+          value={selectedCase}
+          onChange={(event: SelectChangeEvent<string>) => handleSelectChange(event.target.value as string)}
+        >
+          <MenuItem value={WorldWipCases.NewConfirmed}>New Confirmed</MenuItem>
+          <MenuItem value={WorldWipCases.NewDeaths}>New Deaths</MenuItem>
+          <MenuItem value={WorldWipCases.TotalDeaths}>Total Deaths</MenuItem>
+          <MenuItem value={WorldWipCases.NewRecovered}>New Recovered</MenuItem>
+          <MenuItem value={WorldWipCases.TotalRecovered}>Total Recovered</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 };

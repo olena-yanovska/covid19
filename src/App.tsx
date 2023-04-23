@@ -6,11 +6,13 @@ import { WorldWIP } from './pages/WorldWIP/WorldWIP';
 import { LiveByCountry } from './pages/LiveByCountry/LiveByCountry';
 import { About } from './pages/About/About';
 
+import Box from '@mui/material/Box';
+
 function App() {
   return (
     <div className="App">
       <Header />
-      <div className='main-wrapper'>
+      <Box sx={{ maxWidth: '1280px', display: 'flex', flexDirection: 'row', margin: 'auto' }}>
         <Sidebar />
         <Routes>
           <Route path="/" element={<About />} />
@@ -18,7 +20,7 @@ function App() {
           <Route path="/world-wip" element={<WorldWIP />} />
           <Route path="/live-by-country" element={<LiveByCountry />} />
         </Routes>
-      </div>
+      </Box>
     </div>
   )
 }

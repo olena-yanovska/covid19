@@ -1,28 +1,35 @@
 import { Link } from 'react-router-dom';
-import './Sidebar.scss';
+
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 export const Sidebar: React.FC = () => {
   return (
-    <nav className='sidebar'>
-      <ul className='sidebar__lis'>
-        <li className='sidebar__item'>
-          <Link to="/world-wip" className='sidebar__link' >
-            World WIP
-          </Link>
-        </li>
+    <Box sx={{ width: '30%', maxWidth: '200px' }}>
+      <nav aria-label="secondary mailbox folders">
+        <List component="ul">
+          <ListItem disablePadding component={Link} to="/world-wip">
+            <ListItemButton>
+              <ListItemText primary="World WIP" />
+            </ListItemButton>
+          </ListItem>
 
-        <li className='sidebar__item'>
-          <Link to="/live-by-country" className='sidebar__link'>
-            Live by Country
-          </Link>
-        </li>
+          <ListItem disablePadding component={Link} to="/live-by-country">
+            <ListItemButton>
+              <ListItemText primary="Live by Country" />
+            </ListItemButton>
+          </ListItem>
 
-        <li className='sidebar__item'>
-          <Link to="/about" className='sidebar__link'>
-            About
-          </Link>
-        </li>
-      </ul>
-    </nav>
+          <ListItem disablePadding component={Link} to="/about">
+            <ListItemButton>
+              <ListItemText primary="About" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </nav>
+    </Box>
   );
 };

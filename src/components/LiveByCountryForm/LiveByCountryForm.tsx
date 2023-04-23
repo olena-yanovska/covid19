@@ -1,10 +1,14 @@
 import { countries } from '../../api/countries';
 import { LiveByCountryCases } from '../../types/types';
-import './LiveByCountryForm.scss';
+
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface Props {
-  selectedCase: LiveByCountryCases,
-  setSelectedCase: React.Dispatch<React.SetStateAction<LiveByCountryCases>>,
+  selectedCase: string,
+  setSelectedCase: any,
   selectedCountry: string,
   setSelectedCountry: React.Dispatch<React.SetStateAction<string>>,
 }
@@ -20,43 +24,44 @@ export const LiveByCountryForm: React.FC<Props> = ({
   const sortedCountries = countries
     .sort((a, b) => a.Slug.localeCompare(b.Country));
 
-  const handleSelectCase = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value as LiveByCountryCases;
-    setSelectedCase(selectedValue);
+  const handleSelectCase = (value: string) => {
+    setSelectedCase(value);
   };
 
-  const handleSelectCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    setSelectedCountry(selectedValue);
+  const handleSelectCountry = (value: string) => {
+    setSelectedCountry(value);
     console.log('set selected country')
   };
 
   return (
-    <div className='liveByCountryForm'>
-      <h3>Live by Country Content</h3>
+    <Box sx={{ display: 'flex', gap: 3 }}>
       <p>{'date from: ' + dateFrom}</p>
 
-      <form >
-        <div>
-          <label>
-            Select a country:
-            <select value={selectedCountry} onChange={handleSelectCountry}>
-              {sortedCountries.map((country) => (
-                <option key={country.Slug} value={country.Slug}>{country.Country}</option>
-              ))}
-            </select>
-          </label>
-        </div>
+      <FormControl>
+        <Select
+          labelId="country-select-label"
+          id="country-select"
+          value={selectedCountry}
+          onChange={(event: SelectChangeEvent<string>) => handleSelectCountry(event.target.value as string)}
+        >
+          {sortedCountries.map((country) => (
+            <MenuItem key={country.Slug} value={country.Slug}>{country.Country}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-        <label>
-          Select a case:
-          <select value={selectedCase} onChange={handleSelectCase}>
-            <option value={LiveByCountryCases.Confirmed}>Confirmed</option>
-            <option value={LiveByCountryCases.Deaths}>Deaths</option>
-            <option value={LiveByCountryCases.Recovered}>Recovered</option>
-          </select>
-        </label>
-      </form>
-    </div>
+      <FormControl>
+        <Select
+          labelId="case-select-label"
+          id="case-select"
+          value={selectedCase}
+          onChange={(event: SelectChangeEvent<string>) => handleSelectCase(event.target.value)}
+        >
+          <MenuItem value='Confirmed'>Confirmed</MenuItem>
+          <MenuItem value='Deaths'>Deaths</MenuItem>
+          <MenuItem value='Recovered'>Recovered</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
