@@ -11,6 +11,7 @@ import dayjs, { Dayjs } from 'dayjs';
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
   const [selectedCase, setSelectedCase] = useState<string>(WorldWipCases.NewConfirmed);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const defaultDateFrom: Dayjs = dayjs('2022-01-01');
   const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
@@ -23,6 +24,7 @@ export const WorldWIP: React.FC = () => {
 
   useEffect(() => {
     const getDataWorld = async () => {
+      setIsLoading(true);
       try {
         const res = await getWorldWipData(fullUrl);
 
@@ -34,6 +36,8 @@ export const WorldWIP: React.FC = () => {
         }
       } catch (error) {
         console.log('error WorldWipData');
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -45,7 +49,7 @@ export const WorldWIP: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: '70%', padding: '50px' }}>
+    <Box sx={{ width: '80%', padding: '50px' }}>
       <WorldWipForm
         selectedCase={selectedCase}
         setSelectedCase={setSelectedCase}
@@ -54,7 +58,7 @@ export const WorldWIP: React.FC = () => {
         dateTo={dateTo}
         setDateTo={setDateTo}
       />
-      {worldWipData.length === 0 ? (
+      {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
           <CircularProgress />
         </Box>

@@ -10,6 +10,8 @@ import {
 
 import { WorldWipData } from '../../types/types';
 import { Box } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 interface Props {
   worldWipData: WorldWipData[],
@@ -21,7 +23,7 @@ export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) =
     const clearedDate = worldWipData.map((obj) => {
       return {
         ...obj,
-        "Date": String(obj.Date).slice(0, 10) 
+        "Date": String(obj.Date).slice(0, 10)
       }
     })
 
@@ -31,26 +33,34 @@ export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) =
   const preparedData = getPreparedData(worldWipData);
 
   return (
-    <Box sx={{
-      width: '100%',
-      height: '350px',
-    }}>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={preparedData}
-          margin={{
-            top: 40,
-            left: 20,
-            bottom: 50,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Date" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey={selectedCase} fill="#8884d8" />
-        </BarChart>
-      </ResponsiveContainer>
-    </Box>
+    <>
+      {preparedData.length === 0 ? (
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="info">No data for the selected date range</Alert>
+        </Stack>
+      ) : (
+        <Box sx={{
+          width: '100%',
+          height: '350px',
+        }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={preparedData}
+              margin={{
+                top: 40,
+                left: 20,
+                bottom: 50,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="Date" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey={selectedCase} fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Box>
+      )}
+    </>
   );
 };

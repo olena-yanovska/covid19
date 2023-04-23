@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 
 export const About: React.FC = () => {
   return (
-    <Box sx={{ width: '70%', padding: '30px' }}>
+    <Box sx={{ width: '80%', padding: '30px' }}>
       <Typography variant="body1" gutterBottom>
         Welcome to this website, where you can explore the latest statistics on COVID-19 cases around the world.
       </Typography>

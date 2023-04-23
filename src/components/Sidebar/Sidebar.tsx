@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 export const Sidebar: React.FC = () => {
   return (
-    <Box sx={{ width: '30%', minWidth: '150px' }}>
+    <Box sx={{ width: '20%', minWidth: '150px' }}>
       <nav aria-label="secondary mailbox folders">
         <List component="ul">
           <ListItem disablePadding component={Link} to="/world-wip">

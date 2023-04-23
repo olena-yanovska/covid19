@@ -40,7 +40,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 3 }}>
+    <Box sx={{ display: 'flex', gap: 3, marginBottom: '20px' }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Date from"

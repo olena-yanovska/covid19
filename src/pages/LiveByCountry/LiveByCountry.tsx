@@ -13,6 +13,7 @@ export const LiveByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
   const [selectedCase, setSelectedCase] = useState<string>('Confirmed');
   const [selectedCountry, setSelectedCountry] = useState<string>(countries.find(c => c.Country === 'Ukraine')!.Slug);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const defaultDateFrom: Dayjs = dayjs('2022-01-01');
   const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
@@ -29,6 +30,8 @@ export const LiveByCountry: React.FC = () => {
     const fullUrl = getFullUrl();
 
     const getDataCountry = async () => {
+      setIsLoading(true);
+
       try {
         const res = await getLiveByCountryData(fullUrl);
 
@@ -37,6 +40,8 @@ export const LiveByCountry: React.FC = () => {
         }
       } catch (error) {
         console.log('error liveByCountryData');
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -44,7 +49,7 @@ export const LiveByCountry: React.FC = () => {
   }, [selectedCase, selectedCountry, dateFrom]);
 
   return (
-    <Box sx={{ width: '70%', padding: '50px' }}>
+    <Box sx={{ width: '80%', padding: '50px' }}>
       <LiveByCountryForm
         selectedCase={selectedCase}
         setSelectedCase={setSelectedCase}
@@ -54,11 +59,11 @@ export const LiveByCountry: React.FC = () => {
         setDateFrom={setDateFrom}
       />
 
-      {liveByCountryData.length === 0 ? (
+      {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
         <CircularProgress />
       </Box>
-      ) : (
+      ) : (        
         <LiveByCountryChart
           liveByCountryData={liveByCountryData}
           selectedCase={selectedCase}
