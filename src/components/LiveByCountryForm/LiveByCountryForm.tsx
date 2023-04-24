@@ -12,31 +12,28 @@ import dayjs, { Dayjs } from 'dayjs';
 
 interface Props {
   selectedCase: string,
-  setSelectedCase: any,
   selectedCountry: string,
-  setSelectedCountry: React.Dispatch<React.SetStateAction<string>>,
   dateFrom: Dayjs,
   setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
+  updateParams: (params: {[key: string]: string})=> void,
 }
 
 export const LiveByCountryForm: React.FC<Props> = ({
   selectedCase,
-  setSelectedCase,
   selectedCountry,
-  setSelectedCountry,
   dateFrom,
   setDateFrom,
+  updateParams,
 }) => {
   const sortedCountries = countries
     .sort((a, b) => a.Slug.localeCompare(b.Country));
 
   const handleSelectCase = (value: string) => {
-    setSelectedCase(value);
+    updateParams({ case: value });
   };
 
   const handleSelectCountry = (value: string) => {
-    setSelectedCountry(value);
-    console.log('set selected country')
+    updateParams({ country: value });
   };
 
   return (

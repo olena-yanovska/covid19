@@ -7,10 +7,10 @@ import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import dayjs, { Dayjs } from 'dayjs';
+import { useSearchParams } from 'react-router-dom';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
-  const [selectedCase, setSelectedCase] = useState<string>(WorldWipCases.NewConfirmed);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const defaultDateFrom: Dayjs = dayjs('2022-01-01');
@@ -18,6 +18,11 @@ export const WorldWIP: React.FC = () => {
 
   const defaultDateTo: Dayjs = dayjs('2023-01-06');
   const [dateTo, setDateTo] = useState<Dayjs>(defaultDateTo);
+
+  const [searchParams, setSearchParams] = useSearchParams({
+    case: WorldWipCases.NewConfirmed,
+  });
+  const selectedCase = searchParams.get('case') || '';
 
   const baseUrl = 'https://api.covid19api.com/world';
   const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
@@ -44,19 +49,23 @@ export const WorldWIP: React.FC = () => {
     getDataWorld();
   }, [fullUrl]);
 
-  const handleSubmit = (selectedCase: WorldWipCases) => {
-    setSelectedCase(selectedCase);
+  function updateParams(params: { [key: string]: string | '' }) {
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, value);
+    });
+
+    setSearchParams(searchParams);
   };
 
   return (
     <Box sx={{ width: '80%', padding: '50px' }}>
       <WorldWipForm
         selectedCase={selectedCase}
-        setSelectedCase={setSelectedCase}
         dateFrom={dateFrom}
         setDateFrom={setDateFrom}
         dateTo={dateTo}
         setDateTo={setDateTo}
+        updateParams={updateParams}
       />
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>

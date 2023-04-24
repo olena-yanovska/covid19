@@ -10,7 +10,6 @@ export interface WorldWipData {
 export interface LiveByCountryData {
   Country: string,
   Province: string,
-  // CountryCode: string,
   Confirmed: number,
   Deaths: number,
   Recovered: number,
@@ -23,12 +22,6 @@ export enum WorldWipCases {
   TotalDeaths = 'TotalDeaths',
   NewRecovered = 'NewRecovered',
   TotalRecovered = 'TotalRecovered',
-}
-
-export enum LiveByCountryCases {
-  Confirmed = 'Confirmed',
-  Deaths = 'Deaths',
-  Recovered = 'Recovered',
 }
 
 export interface Country {

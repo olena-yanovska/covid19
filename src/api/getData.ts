@@ -21,12 +21,12 @@ export const getLiveByCountryData = async (url: string): Promise<LiveByCountryDa
   }
 }
 
-// export const getCountries = async (): Promise<Country[] | undefined> => {
-//   try {
-//     const response = await axios.get('https://api.covid19api.com/countries');
+export const getCountries = async (): Promise<Country[] | undefined> => {
+  try {
+    const response = await axios.get('https://api.covid19api.com/countries');
 
-//     return response.data;
-//   } catch {
-//     console.log('Error with loadind Countries');
-//   }
-// }
+    return response.data;
+  } catch {
+    console.log('Error with loadind Countries');
+  }
+}

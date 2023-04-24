@@ -12,23 +12,23 @@ import dayjs, { Dayjs } from 'dayjs';
 
 interface Props {
   selectedCase: string,
-  setSelectedCase: React.Dispatch<React.SetStateAction<string>>,
   dateFrom: Dayjs,
   setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
   dateTo: Dayjs,
   setDateTo: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
+  updateParams: (params: {[key: string]: string})=> void,
 }
 
 export const WorldWipForm: React.FC<Props> = ({
   selectedCase,
-  setSelectedCase,
   dateFrom,
   setDateFrom,
   dateTo,
   setDateTo,
+  updateParams,
 }) => {
   const handleSelectChange = (value: string) => {
-    setSelectedCase(value);
+    updateParams({ case: value });
   };
 
   return (
