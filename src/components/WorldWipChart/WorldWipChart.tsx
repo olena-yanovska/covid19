@@ -36,7 +36,7 @@ export const WorldWipChart: React.FC<Props> = ({ worldWipData, selectedCase }) =
     <>
       {preparedData.length === 0 ? (
         <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="info">No data for the selected date range</Alert>
+          <Alert severity="warning">Something went wrong. Try to refresh a page or change date ranges.</Alert>
         </Stack>
       ) : (
         <Box sx={{

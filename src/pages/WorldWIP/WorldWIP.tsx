@@ -7,6 +7,8 @@ import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSearchParams } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
@@ -18,8 +20,8 @@ export const WorldWIP: React.FC = () => {
     dateTo: '2023-01-06',
   });
   const selectedCase = searchParams.get('case') || '';
-  const dateFrom1= searchParams.get('dateFrom') || '';
-  const dateTo1= searchParams.get('dateTo') || '';
+  const dateFrom1 = searchParams.get('dateFrom') || '';
+  const dateTo1 = searchParams.get('dateTo') || '';
 
   const baseUrl = 'https://api.covid19api.com/world';
   const fullUrl = baseUrl + '?from=' + dateFrom1 + '&to=' + dateTo1;
@@ -55,23 +57,32 @@ export const WorldWIP: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: '80%', padding: '50px' }}>
-      <WorldWipForm
-        selectedCase={selectedCase}
-        dateFrom={dateFrom1}
-        dateTo={dateTo1}
-        updateParams={updateParams}
-      />
-      {isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <WorldWipChart
-          worldWipData={worldWipData}
+    <>
+      <Box sx={{ width: '80%', padding: '50px' }}>
+        <WorldWipForm
           selectedCase={selectedCase}
+          dateFrom={dateFrom1}
+          dateTo={dateTo1}
+          updateParams={updateParams}
         />
-      )}
-    </Box>
+        {isLoading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <> {worldWipData.length === 0 ? (
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity="warning">Something went wrong. Try to refresh a page or change date ranges.</Alert>
+            </Stack>
+          ) : (
+            <WorldWipChart
+              worldWipData={worldWipData}
+              selectedCase={selectedCase}
+            />
+          )}
+          </>
+        )}
+      </Box>
+    </>
   );
 };

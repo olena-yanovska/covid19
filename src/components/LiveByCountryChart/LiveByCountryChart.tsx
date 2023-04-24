@@ -16,9 +16,10 @@ import Stack from '@mui/material/Stack';
 interface Props {
   liveByCountryData: LiveByCountryData[],
   selectedCase: string;
+  isLoading: boolean,
 }
 
-export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase }) => {
+export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase, isLoading }) => {
   interface LiveByCountryData {
     [key: string]: any;
   }
@@ -63,7 +64,7 @@ export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selecte
     <>
       {liveByCountryData.length === 0 ? (
         <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="info">No country data for the selected date range</Alert>
+          <Alert severity="warning">No country data for the selected date range</Alert>
         </Stack>
       ) : (
         <Box sx={{

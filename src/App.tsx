@@ -7,8 +7,32 @@ import { LiveByCountry } from './pages/LiveByCountry/LiveByCountry';
 import { About } from './pages/About/About';
 
 import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
+import { getCountries } from './api/getData';
+import { Country } from './types/types';
 
 function App() {
+  const [countries, setCountries] = useState<Country[]>([]);
+
+  useEffect(() => {
+    const getCountryList = async () => {
+      try {
+        const res = await getCountries();
+
+        if (res) {
+          const sortedRes = res
+            .sort((a, b) => a.Slug.localeCompare(b.Country));
+
+          setCountries(sortedRes);
+        }
+      } catch (error) {
+        console.log('error with loading Countries');
+      }
+    };
+
+    getCountryList();
+  }, []);
+
   return (
     <div className="App">
       <Header />
@@ -18,7 +42,7 @@ function App() {
           <Route path="/" element={<About />} />
           <Route path="/about" element={<About />} />
           <Route path="/world-wip" element={<WorldWIP />} />
-          <Route path="/live-by-country" element={<LiveByCountry />} />
+          <Route path="/live-by-country" element={<LiveByCountry countries={countries} />} />
         </Routes>
       </Box>
     </div>

@@ -1,14 +1,20 @@
+// import { countries } from '../../api/countries';
+
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { LiveByCountryData } from '../../types/types';
-import { getLiveByCountryData } from '../../api/getData';
+import { Country, LiveByCountryData } from '../../types/types';
+import { getCountries, getLiveByCountryData } from '../../api/getData';
 import { LiveByCountryChart } from '../../components/LiveByCountryChart/LiveByCountryChart';
 import { LiveByCountryForm } from '../../components/LiveByCountryForm/LiveByCountryForm';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const LiveByCountry: React.FC = () => {
+interface Props {
+  countries: Country[],
+}
+
+export const LiveByCountry: React.FC<Props> = ({ countries }) => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -19,7 +25,7 @@ export const LiveByCountry: React.FC = () => {
   });
   const selectedCase = searchParams.get('case') || '';
   const selectedCountry = searchParams.get('country') || '';
-  const dateFrom= searchParams.get('dateFrom') || '';
+  const dateFrom = searchParams.get('dateFrom') || '';
 
   useEffect(() => {
     function getFullUrl() {
@@ -27,7 +33,7 @@ export const LiveByCountry: React.FC = () => {
       const fullUrl = `${baseUrl}${selectedCountry}` +
         `/status/${selectedCase.toLocaleLowerCase()}/date/${dateFrom}`;
 
-        console.log('full url', fullUrl)
+      console.log('full url', fullUrl)
 
       return fullUrl;
     };
@@ -62,7 +68,7 @@ export const LiveByCountry: React.FC = () => {
     setSearchParams(searchParams);
   };
 
-  function updateSessionStorage (value: string) {
+  function updateSessionStorage(value: string) {
     sessionStorage.setItem('selectedCountry', value);
     updateParams({ country: value });
   };
@@ -70,21 +76,24 @@ export const LiveByCountry: React.FC = () => {
   return (
     <Box sx={{ width: '80%', padding: '50px' }}>
       <LiveByCountryForm
+        countries={countries}
         selectedCase={selectedCase}
         selectedCountry={selectedCountry}
         dateFrom={dateFrom}
         updateParams={updateParams}
         updateSessionStorage={updateSessionStorage}
+        
       />
 
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-        <CircularProgress />
-      </Box>
+          <CircularProgress />
+        </Box>
       ) : (
         <LiveByCountryChart
           liveByCountryData={liveByCountryData}
           selectedCase={selectedCase}
+          isLoading={isLoading}
         />
       )}
     </Box>
