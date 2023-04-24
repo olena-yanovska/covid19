@@ -14,7 +14,7 @@ export const LiveByCountry: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams({
     case: 'Confirmed',
-    country: 'ukraine',
+    country: sessionStorage.getItem('selectedCountry') || 'ukraine',
     dateFrom: '2022-01-01',
   });
   const selectedCase = searchParams.get('case') || '';
@@ -62,7 +62,10 @@ export const LiveByCountry: React.FC = () => {
     setSearchParams(searchParams);
   };
 
-  console.log('dateFrom', dateFrom.toString())
+  function updateSessionStorage (value: string) {
+    sessionStorage.setItem('selectedCountry', value);
+    updateParams({ country: value });
+  };
 
   return (
     <Box sx={{ width: '80%', padding: '50px' }}>
@@ -71,6 +74,7 @@ export const LiveByCountry: React.FC = () => {
         selectedCountry={selectedCountry}
         dateFrom={dateFrom}
         updateParams={updateParams}
+        updateSessionStorage={updateSessionStorage}
       />
 
       {isLoading ? (

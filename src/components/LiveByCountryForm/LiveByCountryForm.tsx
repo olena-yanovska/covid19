@@ -15,6 +15,7 @@ interface Props {
   selectedCountry: string,
   dateFrom: string,
   updateParams: (params: { [key: string]: string }) => void,
+  updateSessionStorage: (value: string) => void,
 }
 
 export const LiveByCountryForm: React.FC<Props> = ({
@@ -22,16 +23,13 @@ export const LiveByCountryForm: React.FC<Props> = ({
   selectedCountry,
   dateFrom,
   updateParams,
+  updateSessionStorage,
 }) => {
   const sortedCountries = countries
     .sort((a, b) => a.Slug.localeCompare(b.Country));
 
   const handleSelectCase = (value: string) => {
     updateParams({ case: value });
-  };
-
-  const handleSelectCountry = (value: string) => {
-    updateParams({ country: value });
   };
 
   return (
@@ -58,7 +56,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
           labelId="country-select-label"
           id="country-select"
           value={selectedCountry}
-          onChange={(event: SelectChangeEvent<string>) => handleSelectCountry(event.target.value as string)}
+          onChange={(event: SelectChangeEvent<string>) => updateSessionStorage(event.target.value as string)}
         >
           {sortedCountries.map((country) => (
             <MenuItem key={country.Slug} value={country.Slug}>{country.Country}</MenuItem>
