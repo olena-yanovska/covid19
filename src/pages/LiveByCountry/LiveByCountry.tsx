@@ -4,25 +4,22 @@ import { LiveByCountryData } from '../../types/types';
 import { getLiveByCountryData } from '../../api/getData';
 import { LiveByCountryChart } from '../../components/LiveByCountryChart/LiveByCountryChart';
 import { LiveByCountryForm } from '../../components/LiveByCountryForm/LiveByCountryForm';
-import { countries } from '../../api/countries';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import dayjs, { Dayjs } from 'dayjs';
 
 export const LiveByCountry: React.FC = () => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const defaultDateFrom: Dayjs = dayjs('2022-01-01');
-  const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
-
   const [searchParams, setSearchParams] = useSearchParams({
     case: 'Confirmed',
     country: 'ukraine',
+    dateFrom: '2022-01-01',
   });
   const selectedCase = searchParams.get('case') || '';
   const selectedCountry = searchParams.get('country') || '';
+  const dateFrom= searchParams.get('dateFrom') || '';
 
   useEffect(() => {
     function getFullUrl() {
@@ -65,13 +62,14 @@ export const LiveByCountry: React.FC = () => {
     setSearchParams(searchParams);
   };
 
+  console.log('dateFrom', dateFrom.toString())
+
   return (
     <Box sx={{ width: '80%', padding: '50px' }}>
       <LiveByCountryForm
         selectedCase={selectedCase}
         selectedCountry={selectedCountry}
         dateFrom={dateFrom}
-        setDateFrom={setDateFrom}
         updateParams={updateParams}
       />
 

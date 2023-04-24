@@ -12,19 +12,15 @@ import dayjs, { Dayjs } from 'dayjs';
 
 interface Props {
   selectedCase: string,
-  dateFrom: Dayjs,
-  setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
-  dateTo: Dayjs,
-  setDateTo: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
+  dateFrom: string,
+  dateTo: string,
   updateParams: (params: {[key: string]: string})=> void,
 }
 
 export const WorldWipForm: React.FC<Props> = ({
   selectedCase,
   dateFrom,
-  setDateFrom,
   dateTo,
-  setDateTo,
   updateParams,
 }) => {
   const handleSelectChange = (value: string) => {
@@ -37,12 +33,14 @@ export const WorldWipForm: React.FC<Props> = ({
         <DatePicker
           label="Date from"
           defaultValue={dayjs(dateFrom)}
-          value={dateFrom}
+          value={dayjs(dateFrom)}
           onChange={(newValue) => {
             if (newValue) {
-              setDateFrom(newValue);
+              const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
+
+              updateParams({ dateFrom: formattedDate });
             } else {
-              setDateFrom(dateFrom);
+              updateParams({ dateFrom: String(dateFrom) });
             }
           }}
         />
@@ -50,12 +48,14 @@ export const WorldWipForm: React.FC<Props> = ({
         <DatePicker
           label="Date to"
           defaultValue={dayjs(dateTo)}
-          value={dateTo}
+          value={dayjs(dateTo)}
           onChange={(newValue) => {
             if (newValue) {
-              setDateTo(newValue);
+              const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
+
+              updateParams({ dateTo: formattedDate });
             } else {
-              setDateTo(dateFrom);
+              updateParams({ dateTo: String(dateFrom) });
             }
           }}
         />

@@ -6,26 +6,23 @@ import { WorldWipForm } from '../../components/WorldWipForm/WorldWipForm';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import dayjs, { Dayjs } from 'dayjs';
 import { useSearchParams } from 'react-router-dom';
 
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const defaultDateFrom: Dayjs = dayjs('2022-01-01');
-  const [dateFrom, setDateFrom] = useState<Dayjs>(defaultDateFrom);
-
-  const defaultDateTo: Dayjs = dayjs('2023-01-06');
-  const [dateTo, setDateTo] = useState<Dayjs>(defaultDateTo);
-
   const [searchParams, setSearchParams] = useSearchParams({
     case: WorldWipCases.NewConfirmed,
+    dateFrom: '2022-01-01',
+    dateTo: '2023-01-06',
   });
   const selectedCase = searchParams.get('case') || '';
+  const dateFrom1= searchParams.get('dateFrom') || '';
+  const dateTo1= searchParams.get('dateTo') || '';
 
   const baseUrl = 'https://api.covid19api.com/world';
-  const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
+  const fullUrl = baseUrl + '?from=' + dateFrom1 + '&to=' + dateTo1;
 
   useEffect(() => {
     const getDataWorld = async () => {
@@ -61,10 +58,8 @@ export const WorldWIP: React.FC = () => {
     <Box sx={{ width: '80%', padding: '50px' }}>
       <WorldWipForm
         selectedCase={selectedCase}
-        dateFrom={dateFrom}
-        setDateFrom={setDateFrom}
-        dateTo={dateTo}
-        setDateTo={setDateTo}
+        dateFrom={dateFrom1}
+        dateTo={dateTo1}
         updateParams={updateParams}
       />
       {isLoading ? (

@@ -13,16 +13,14 @@ import dayjs, { Dayjs } from 'dayjs';
 interface Props {
   selectedCase: string,
   selectedCountry: string,
-  dateFrom: Dayjs,
-  setDateFrom: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>,
-  updateParams: (params: {[key: string]: string})=> void,
+  dateFrom: string,
+  updateParams: (params: { [key: string]: string }) => void,
 }
 
 export const LiveByCountryForm: React.FC<Props> = ({
   selectedCase,
   selectedCountry,
   dateFrom,
-  setDateFrom,
   updateParams,
 }) => {
   const sortedCountries = countries
@@ -42,12 +40,14 @@ export const LiveByCountryForm: React.FC<Props> = ({
         <DatePicker
           label="Date from"
           defaultValue={dayjs(dateFrom)}
-          value={dateFrom}
+          value={dayjs(dateFrom)}
           onChange={(newValue) => {
             if (newValue) {
-              setDateFrom(newValue);
+              const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
+
+              updateParams({ dateFrom: formattedDate });
             } else {
-              setDateFrom(dateFrom);
+              updateParams({ dateFrom: String(dateFrom) });
             }
           }}
         />
