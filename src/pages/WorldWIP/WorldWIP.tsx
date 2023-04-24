@@ -58,7 +58,7 @@ export const WorldWIP: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ width: '80%', padding: '50px' }}>
+      <Box sx={{ width: '80%', padding: '40px 20px' }}>
         <WorldWipForm
           selectedCase={selectedCase}
           dateFrom={dateFrom}

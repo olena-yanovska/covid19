@@ -72,7 +72,7 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
   };
 
   return (
-    <Box sx={{ width: '80%', padding: '50px' }}>
+    <Box sx={{ width: '80%', padding: '40px 20px' }}>
       <LiveByCountryForm
         countries={countries}
         selectedCase={selectedCase}
