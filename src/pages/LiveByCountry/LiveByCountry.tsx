@@ -1,9 +1,7 @@
-// import { countries } from '../../api/countries';
-
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Country, LiveByCountryData } from '../../types/types';
-import { getCountries, getLiveByCountryData } from '../../api/getData';
+import { getLiveByCountryData } from '../../api/getData';
 import { LiveByCountryChart } from '../../components/LiveByCountryChart/LiveByCountryChart';
 import { LiveByCountryForm } from '../../components/LiveByCountryForm/LiveByCountryForm';
 
@@ -93,7 +91,6 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
         <LiveByCountryChart
           liveByCountryData={liveByCountryData}
           selectedCase={selectedCase}
-          isLoading={isLoading}
         />
       )}
     </Box>

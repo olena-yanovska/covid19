@@ -1,5 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getCountries } from './api/getData';
+import { Country } from './types/types';
 import './App.scss';
+
 import { Header } from './components/Header/Header';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { WorldWIP } from './pages/WorldWIP/WorldWIP';
@@ -7,9 +11,6 @@ import { LiveByCountry } from './pages/LiveByCountry/LiveByCountry';
 import { About } from './pages/About/About';
 
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
-import { getCountries } from './api/getData';
-import { Country } from './types/types';
 
 function App() {
   const [countries, setCountries] = useState<Country[]>([]);

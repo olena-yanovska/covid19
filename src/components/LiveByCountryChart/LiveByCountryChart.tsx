@@ -16,10 +16,9 @@ import Stack from '@mui/material/Stack';
 interface Props {
   liveByCountryData: LiveByCountryData[],
   selectedCase: string;
-  isLoading: boolean,
 }
 
-export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase, isLoading }) => {
+export const LiveByCountryChart: React.FC<Props> = ({ liveByCountryData, selectedCase }) => {
   interface LiveByCountryData {
     [key: string]: any;
   }

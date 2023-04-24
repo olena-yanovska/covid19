@@ -4,11 +4,10 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 interface Props {
   selectedCase: string,
@@ -23,10 +22,6 @@ export const WorldWipForm: React.FC<Props> = ({
   dateTo,
   updateParams,
 }) => {
-  const handleSelectChange = (value: string) => {
-    updateParams({ case: value });
-  };
-
   return (
     <Box sx={{ display: 'flex', gap: 3, marginBottom: '20px' }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -55,7 +50,7 @@ export const WorldWipForm: React.FC<Props> = ({
 
               updateParams({ dateTo: formattedDate });
             } else {
-              updateParams({ dateTo: String(dateFrom) });
+              updateParams({ dateTo: String(dateTo) });
             }
           }}
         />
@@ -66,7 +61,8 @@ export const WorldWipForm: React.FC<Props> = ({
           labelId="country-select-label"
           id="country-select"
           value={selectedCase}
-          onChange={(event: SelectChangeEvent<string>) => handleSelectChange(event.target.value as string)}
+          onChange={(event: SelectChangeEvent<string>) => 
+            updateParams({ case: event.target.value as string })}
         >
           <MenuItem value={WorldWipCases.NewConfirmed}>New Confirmed</MenuItem>
           <MenuItem value={WorldWipCases.NewDeaths}>New Deaths</MenuItem>

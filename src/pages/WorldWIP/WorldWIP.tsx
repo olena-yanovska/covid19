@@ -20,11 +20,11 @@ export const WorldWIP: React.FC = () => {
     dateTo: '2023-01-06',
   });
   const selectedCase = searchParams.get('case') || '';
-  const dateFrom1 = searchParams.get('dateFrom') || '';
-  const dateTo1 = searchParams.get('dateTo') || '';
+  const dateFrom = searchParams.get('dateFrom') || '';
+  const dateTo = searchParams.get('dateTo') || '';
 
   const baseUrl = 'https://api.covid19api.com/world';
-  const fullUrl = baseUrl + '?from=' + dateFrom1 + '&to=' + dateTo1;
+  const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
 
   useEffect(() => {
     const getDataWorld = async () => {
@@ -61,8 +61,8 @@ export const WorldWIP: React.FC = () => {
       <Box sx={{ width: '80%', padding: '50px' }}>
         <WorldWipForm
           selectedCase={selectedCase}
-          dateFrom={dateFrom1}
-          dateTo={dateTo1}
+          dateFrom={dateFrom}
+          dateTo={dateTo}
           updateParams={updateParams}
         />
         {isLoading ? (
@@ -72,7 +72,9 @@ export const WorldWIP: React.FC = () => {
         ) : (
           <> {worldWipData.length === 0 ? (
             <Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert severity="warning">Something went wrong. Try to refresh a page or change date ranges.</Alert>
+              <Alert severity="warning">
+                Something went wrong. Try to refresh a page or change date ranges.
+              </Alert>
             </Stack>
           ) : (
             <WorldWipChart

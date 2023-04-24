@@ -1,20 +1,14 @@
-// import { countries } from '../../api/countries';
-
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { getCountries } from '../../api/getData';
-import { useEffect, useState } from 'react';
 import { Country } from '../../types/types';
-
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import dayjs from 'dayjs';
 
 interface Props {
   countries: Country[],
@@ -33,9 +27,15 @@ export const LiveByCountryForm: React.FC<Props> = ({
   updateParams,
   updateSessionStorage,
 }) => {
+  
+  function changeDate(newValue: string) {
+    if (newValue) {
+      const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
 
-  const handleSelectCase = (value: string) => {
-    updateParams({ case: value });
+      updateParams({ dateFrom: formattedDate });
+    } else {
+      updateParams({ dateFrom: String(dateFrom) });
+    }
   };
 
   return (
@@ -46,15 +46,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
             label="Date from"
             defaultValue={dayjs(dateFrom)}
             value={dayjs(dateFrom)}
-            onChange={(newValue) => {
-              if (newValue) {
-                const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
-
-                updateParams({ dateFrom: formattedDate });
-              } else {
-                updateParams({ dateFrom: String(dateFrom) });
-              }
-            }}
+            onChange={(value) => changeDate(String(value))}
           />
         </LocalizationProvider>
 
@@ -64,7 +56,9 @@ export const LiveByCountryForm: React.FC<Props> = ({
             onChange={(event: SelectChangeEvent<string>) => updateSessionStorage(event.target.value as string)}
           >
             {countries.map((country) => (
-              <MenuItem key={country.Slug} value={country.Slug}>{country.Country}</MenuItem>
+              <MenuItem key={country.Slug} value={country.Slug}>
+                {country.Country}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -74,7 +68,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
             labelId="case-select-label"
             id="case-select"
             value={selectedCase}
-            onChange={(event: SelectChangeEvent<string>) => handleSelectCase(event.target.value)}
+            onChange={(event: SelectChangeEvent<string>) =>updateParams({ case: event.target.value })}
           >
             <MenuItem value='Confirmed'>Confirmed</MenuItem>
             <MenuItem value='Deaths'>Deaths</MenuItem>
