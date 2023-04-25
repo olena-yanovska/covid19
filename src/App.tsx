@@ -13,24 +13,32 @@ import { About } from './pages/About/About';
 import Box from '@mui/material/Box';
 
 function App() {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<Country[]>(JSON.parse(sessionStorage.getItem('countries') as string) || []);
 
   useEffect(() => {
     const getCountryList = async () => {
       try {
-        const res = await getCountries();
+        let res;
+        const storedCountries = sessionStorage.getItem('countries');
 
+        if (storedCountries) {
+          res = JSON.parse(storedCountries);
+        } else {
+          res = await getCountries();
+        }
+  
         if (res) {
-          const sortedRes = res
-            .sort((a, b) => a.Slug.localeCompare(b.Country));
-
+          const arrayRes = Object.values(res);
+          const sortedRes: any[] = arrayRes.sort((a: any, b: any) => a.Slug.localeCompare(b.Slug));
+          
           setCountries(sortedRes);
+          sessionStorage.setItem('countries', JSON.stringify(sortedRes));
         }
       } catch (error) {
         console.log('error with loading Countries');
       }
     };
-
+  
     getCountryList();
   }, []);
 

@@ -31,8 +31,6 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
       const fullUrl = `${baseUrl}${selectedCountry}` +
         `/status/${selectedCase.toLocaleLowerCase()}/date/${dateFrom}`;
 
-      console.log('full url', fullUrl)
-
       return fullUrl;
     };
 
