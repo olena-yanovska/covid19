@@ -44,7 +44,6 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
 
         if (res) {
           setLiveByCountryData(res);
-          console.log('liveByCountryData', liveByCountryData)
         }
       } catch (error) {
         console.log('error liveByCountryData');
