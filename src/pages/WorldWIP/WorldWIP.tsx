@@ -10,18 +10,20 @@ import { useSearchParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
+const defaultSearchParams = {
+  case: WorldWipCases.NewConfirmed,
+  dateFrom: '2022-01-01',
+  dateTo: '2023-01-06',
+};
+
 export const WorldWIP: React.FC = () => {
   const [worldWipData, setWorldWipData] = useState<WorldWipData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [searchParams, setSearchParams] = useSearchParams({
-    case: WorldWipCases.NewConfirmed,
-    dateFrom: '2022-01-01',
-    dateTo: '2023-01-06',
-  });
-  const selectedCase = searchParams.get('case') || '';
-  const dateFrom = searchParams.get('dateFrom') || '';
-  const dateTo = searchParams.get('dateTo') || '';
+  const [searchParams, setSearchParams] = useSearchParams(defaultSearchParams);
+  const selectedCase = searchParams.get('case') || defaultSearchParams.case;
+  const dateFrom = searchParams.get('dateFrom') || defaultSearchParams.dateFrom;
+  const dateTo = searchParams.get('dateTo') || defaultSearchParams.dateTo;
 
   const baseUrl = 'https://api.covid19api.com/world';
   const fullUrl = baseUrl + '?from=' + dateFrom + '&to=' + dateTo;
@@ -57,34 +59,32 @@ export const WorldWIP: React.FC = () => {
   };
 
   return (
-    <>
-      <Box sx={{ width: '80%', padding: '40px 20px' }}>
-        <WorldWipForm
-          selectedCase={selectedCase}
-          dateFrom={dateFrom}
-          dateTo={dateTo}
-          updateParams={updateParams}
-        />
-        {isLoading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-            <CircularProgress />
-          </Box>
+    <Box sx={{ width: '80%', padding: '40px 20px' }}>
+      <WorldWipForm
+        selectedCase={selectedCase}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        updateParams={updateParams}
+      />
+      {isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <> {worldWipData.length === 0 ? (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="warning">
+              Something went wrong. Try to refresh a page or change date ranges.
+            </Alert>
+          </Stack>
         ) : (
-          <> {worldWipData.length === 0 ? (
-            <Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert severity="warning">
-                Something went wrong. Try to refresh a page or change date ranges.
-              </Alert>
-            </Stack>
-          ) : (
-            <WorldWipChart
-              worldWipData={worldWipData}
-              selectedCase={selectedCase}
-            />
-          )}
-          </>
+          <WorldWipChart
+            worldWipData={worldWipData}
+            selectedCase={selectedCase}
+          />
         )}
-      </Box>
-    </>
+        </>
+      )}
+    </Box>
   );
 };

@@ -24,18 +24,9 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
 
   const [searchParams, setSearchParams] = useSearchParams(defaultSearchParams);
 
-  const selectedCase = searchParams.get('case') || 'Confirmed';
-  const selectedCountry = searchParams.get('country') || 'ukraine';
-  const dateFrom = searchParams.get('dateFrom') || '2022-01-01';
-
-  console.log('searchParams', searchParams)
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   if (params.toString() === '') {
-  //     setSearchParams(defaultSearchParams);
-  //   }
-  // }, [setSearchParams]);
+  const selectedCase = searchParams.get('case') || defaultSearchParams.case;
+  const selectedCountry = searchParams.get('country') || defaultSearchParams.country;
+  const dateFrom = searchParams.get('dateFrom') || defaultSearchParams.dateFrom;
 
   useEffect(() => {
     function getFullUrl() {
