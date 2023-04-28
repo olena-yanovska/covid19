@@ -10,20 +10,32 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 interface Props {
   countries: Country[],
-}
+};
+
+const defaultSearchParams = {
+  case: 'Confirmed',
+  country: 'ukraine',
+  dateFrom: '2022-01-01',
+};
 
 export const LiveByCountry: React.FC<Props> = ({ countries }) => {
   const [liveByCountryData, setLiveByCountryData] = useState<LiveByCountryData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [searchParams, setSearchParams] = useSearchParams({
-    case: 'Confirmed',
-    country: sessionStorage.getItem('selectedCountry') || 'ukraine',
-    dateFrom: '2022-01-01',
-  });
-  const selectedCase = searchParams.get('case') || '';
-  const selectedCountry = searchParams.get('country') || '';
-  const dateFrom = searchParams.get('dateFrom') || '';
+  const [searchParams, setSearchParams] = useSearchParams(defaultSearchParams);
+
+  const selectedCase = searchParams.get('case') || 'Confirmed';
+  const selectedCountry = searchParams.get('country') || 'ukraine';
+  const dateFrom = searchParams.get('dateFrom') || '2022-01-01';
+
+  console.log('searchParams', searchParams)
+
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   if (params.toString() === '') {
+  //     setSearchParams(defaultSearchParams);
+  //   }
+  // }, [setSearchParams]);
 
   useEffect(() => {
     function getFullUrl() {
@@ -63,11 +75,6 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
     setSearchParams(searchParams);
   };
 
-  function updateSessionStorage(value: string) {
-    sessionStorage.setItem('selectedCountry', value);
-    updateParams({ country: value });
-  };
-
   return (
     <Box sx={{ width: '80%', padding: '40px 20px' }}>
       <LiveByCountryForm
@@ -76,8 +83,6 @@ export const LiveByCountry: React.FC<Props> = ({ countries }) => {
         selectedCountry={selectedCountry}
         dateFrom={dateFrom}
         updateParams={updateParams}
-        updateSessionStorage={updateSessionStorage}
-        
       />
 
       {isLoading ? (

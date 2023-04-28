@@ -16,7 +16,6 @@ interface Props {
   selectedCountry: string,
   dateFrom: string,
   updateParams: (params: { [key: string]: string }) => void,
-  updateSessionStorage: (value: string) => void,
 }
 
 export const LiveByCountryForm: React.FC<Props> = ({
@@ -25,7 +24,6 @@ export const LiveByCountryForm: React.FC<Props> = ({
   selectedCountry,
   dateFrom,
   updateParams,
-  updateSessionStorage,
 }) => {
   
   function changeDate(newValue: string) {
@@ -53,7 +51,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
         <FormControl>
           <Select
             value={selectedCountry}
-            onChange={(event: SelectChangeEvent<string>) => updateSessionStorage(event.target.value as string)}
+            onChange={(event: SelectChangeEvent<string>) => updateParams({ country: event.target.value })}
           >
             {countries.map((country) => (
               <MenuItem key={country.Slug} value={country.Slug}>
