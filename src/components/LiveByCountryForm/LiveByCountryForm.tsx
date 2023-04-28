@@ -79,7 +79,7 @@ export const LiveByCountryForm: React.FC<Props> = ({
 
       <Stack sx={{ width: '100%', marginBottom: '10px' }} spacing={2}>
         <Alert severity="info">
-          Please note that country statistics are available for dates from June 25, 2021 to September 9, 2022.
+          Please note that country statistics are available for dates from June 25, 2021 to September 11, 2022.
         </Alert>
       </Stack>
     </>

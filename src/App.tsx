@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getCountries } from './api/getData';
 import { Country } from './types/types';
@@ -48,7 +48,7 @@ function App() {
       <Box sx={{ maxWidth: '1280px', display: 'flex', flexDirection: 'row', margin: '0 auto' }}>
         <Sidebar />
         <Routes>
-          <Route path="/" element={<About />} />
+          <Route path="/" element={<Navigate to='/about' replace />} />
           <Route path="/about" element={<About />} />
           <Route path="/world-wip" element={<WorldWIP />} />
           <Route path="/live-by-country" element={<LiveByCountry countries={countries} />} />
